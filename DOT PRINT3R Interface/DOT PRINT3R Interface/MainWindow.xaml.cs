@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using Core;
+
 namespace DOT_PRINT3R_Interface
 {
     /// <summary>
@@ -23,6 +25,17 @@ namespace DOT_PRINT3R_Interface
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void LoadFileBtn_Click(object sender, RoutedEventArgs e)
+        {
+            FileLoader.LoadImage();
+        }
+
+        private void SendFileBtn_Click(object sender, RoutedEventArgs e)
+        {
+            FileConverter.ConvertFile("dummy");
+            FileSender.ConnectAndSend();
         }
     }
 }

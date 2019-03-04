@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Lego.Ev3.Desktop">
+      <HintPath>..\..\..\..\..\Szymon\Downloads\Lego.Ev3.1.0.0\Lego.Ev3.Desktop.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -63,6 +66,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Core\EV3.cs" />
+    <Compile Include="Core\FileConverter.cs" />
+    <Compile Include="Core\FileLoader.cs" />
+    <Compile Include="Core\FileSender.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

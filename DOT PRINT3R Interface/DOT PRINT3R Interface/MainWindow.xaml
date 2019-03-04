@@ -5,8 +5,46 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DOT_PRINT3R_Interface"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="DOT PRINT3R Interface" Height="450" Width="800" ResizeMode="NoResize">
+
+    <Grid HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Stretch" Background="#FF232323">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="540"/>
+            <ColumnDefinition Width="250"/>
+        </Grid.ColumnDefinitions>
+
+        <Canvas x:Name="ImageCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White">
+            
+        </Canvas>
+
+        <Grid x:Name="Menu" Margin="10" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition Height="3"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="EV3 DOT PRINT3R" TextAlignment="Center" Foreground="White" FontSize="20" Grid.Row="0"/>
+                <TextBlock Text="Control Center" TextAlignment="Center" Foreground="White" FontSize="14" Grid.Row="1"/>
+                <Line Stroke="White" X2="230" StrokeThickness=".5" Grid.Row="2" VerticalAlignment="Center"></Line>
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="LoadFileBtn" Grid.Column="0" Content="Load File" HorizontalAlignment="Center" Margin="10" VerticalAlignment="Top" Width="75" Click="LoadFileBtn_Click"/>
+                <Button x:Name="SendFileBtn" Grid.Column="1" Content="Send to EV3" HorizontalAlignment="Center" Margin="10" VerticalAlignment="Top" Width="75" Click="SendFileBtn_Click"/>
+
+            </Grid>
+        </Grid>
     </Grid>
 </Window>
