@@ -15,6 +15,9 @@ namespace Core
             {
                 EV3.TestConnection();
             }
+            else {
+                UIMessage.ShowError("Cannot connect to EV3 - make sure it's plugged in and turned on.");
+            }
             EV3.Disconnect();
             
         }

@@ -10,11 +10,15 @@ using System.Diagnostics;
 using Lego.Ev3.Core;
 using Lego.Ev3.Desktop;
 
+using Core.ImageProcessing;
+
 namespace Core
 {
     static class FileLoader
     {
         public static string filePath;
+
+        public static ImageTools.ImageConversionParams p;
 
         public static void LoadImage()
         {
@@ -28,6 +32,19 @@ namespace Core
             {
                 filePath = dialog.FileName;
                 Debug.WriteLine(string.Format("Loaded {0}", filePath));
+
+                ImageReader.LoadImage(filePath);
+
+                p = new ImageTools.ImageConversionParams
+                {
+                    Bias = 0,
+                    QuantizeLevel = 4,
+                    NormalizeImage = false,
+                    ResizeSize = new System.Drawing.Size(16, 16),
+                    InvertImage = true
+                };
+
+                ImageReader.ConvertImageToByteStream(p);
             }
         }
     }
