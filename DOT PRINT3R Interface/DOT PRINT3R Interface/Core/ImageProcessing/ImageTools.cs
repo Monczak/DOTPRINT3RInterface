@@ -106,7 +106,7 @@ namespace Core.ImageProcessing
             // Normalize image     
             for (int i = 0; i < height; i++)
                 for (int j = 0; j < width; j++)
-                    brightnessMap[j, i] = (brightnessMap[j, i] - minBrightness) / maxBrightness;
+                    brightnessMap[j, i] = (brightnessMap[j, i] - minBrightness) / (maxBrightness - minBrightness);
 
             return brightnessMap;
         }
