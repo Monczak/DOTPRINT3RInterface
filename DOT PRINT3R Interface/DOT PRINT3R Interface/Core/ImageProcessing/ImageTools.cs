@@ -14,11 +14,18 @@ namespace Core.ImageProcessing
     {
         public struct ImageConversionParams
         {
-            public int Bias;
+            public float Bias;
             public int QuantizeLevel;
             public Size ResizeSize;
             public bool NormalizeImage;
             public bool InvertImage;
+        }
+
+        public static T Clamp<T>(this T val, T min, T max) where T : IComparable<T>
+        {
+            if (val.CompareTo(min) < 0) return min;
+            else if (val.CompareTo(max) > 0) return max;
+            else return val;
         }
 
         public static void MakeGrayscale(this Image image)
@@ -101,12 +108,12 @@ namespace Core.ImageProcessing
                 }
 
             // To prevent division by zero
-            if (maxBrightness == 0) maxBrightness = .00001f;
+            if (maxBrightness == 0) maxBrightness = 1;
 
             // Normalize image     
             for (int i = 0; i < height; i++)
                 for (int j = 0; j < width; j++)
-                    brightnessMap[j, i] = (brightnessMap[j, i] - minBrightness) / (maxBrightness - minBrightness);
+                    brightnessMap[j, i] = ((brightnessMap[j, i] - minBrightness) / (maxBrightness - minBrightness)).Clamp(0, 1);
 
             return brightnessMap;
         }

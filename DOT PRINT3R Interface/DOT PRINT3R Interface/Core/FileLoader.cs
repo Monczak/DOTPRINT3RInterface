@@ -37,11 +37,11 @@ namespace Core
 
                 p = new ImageTools.ImageConversionParams
                 {
-                    Bias = 0,
+                    Bias = 0f,
                     QuantizeLevel = 4,
                     NormalizeImage = false,
-                    ResizeSize = new System.Drawing.Size(16, 16),
-                    InvertImage = true
+                    ResizeSize = new System.Drawing.Size(28, 28),
+                    InvertImage = false
                 };
 
                 ImageReader.ConvertImageToByteStream(p);

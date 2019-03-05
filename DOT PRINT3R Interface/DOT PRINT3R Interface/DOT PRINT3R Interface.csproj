@@ -71,6 +71,7 @@
     <Compile Include="Core\FileConverter.cs" />
     <Compile Include="Core\FileLoader.cs" />
     <Compile Include="Core\FileSender.cs" />
+    <Compile Include="Core\ImageDrawer.cs" />
     <Compile Include="Core\ImageProcessing\ImageReader.cs" />
     <Compile Include="Core\ImageProcessing\ImageTools.cs" />
     <Compile Include="Core\UIMessage.cs" />

@@ -23,16 +23,6 @@ namespace Core.ImageProcessing
         public static void ConvertImageToByteStream(ImageTools.ImageConversionParams p)
         {
             stream = ImageTools.MinifyBitmap(bitmap, p);
-
-            for (int i = 0; i < p.ResizeSize.Height; i++)
-            {
-                string line = "";
-                for (int j = 0; j < p.ResizeSize.Width; j++)
-                {
-                    line += stream[j + i * p.ResizeSize.Width].ToString();
-                }
-                Debug.WriteLine(line);
-            }
         }
 
     
