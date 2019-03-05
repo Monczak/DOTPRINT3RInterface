@@ -39,7 +39,8 @@ namespace DOT_PRINT3R_Interface
                 QuantizeLevel = 4,
                 ResizeSize = new System.Drawing.Size(28, 28),
                 NormalizeImage = false,
-                InvertImage = false
+                InvertImage = false,
+                InvertPost = false
             };
             FileLoader.p = p;
 
@@ -55,8 +56,16 @@ namespace DOT_PRINT3R_Interface
             QuantizeSlider.ValueChanged += QuantizeSlider_ValueChanged;
             InvertCheckBox.Checked += InvertCheckBox_Checked;
             NormalizeCheckBox.Checked += NormalizeCheckBox_Checked;
+            InvertPostCheckBox.Checked += InvertPostCheckBox_Checked;
             InvertCheckBox.Unchecked += InvertCheckBox_Checked;
             NormalizeCheckBox.Unchecked += NormalizeCheckBox_Checked;
+            InvertPostCheckBox.Unchecked += InvertPostCheckBox_Checked;
+        }
+
+        private void InvertPostCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            UpdateConversionParams();
+            ConvertImage(p);
         }
 
         private void NormalizeCheckBox_Checked(object sender, RoutedEventArgs e)
@@ -122,7 +131,8 @@ namespace DOT_PRINT3R_Interface
                 QuantizeLevel = (int)QuantizeSlider.Value,
                 ResizeSize = canChangeSize ? new System.Drawing.Size(sizeX, sizeY) : oldSize,
                 NormalizeImage = NormalizeCheckBox.IsChecked == true,
-                InvertImage = InvertCheckBox.IsChecked == true
+                InvertImage = InvertCheckBox.IsChecked == true,
+                InvertPost = InvertPostCheckBox.IsChecked == true
             };
 
             FileLoader.p = p;

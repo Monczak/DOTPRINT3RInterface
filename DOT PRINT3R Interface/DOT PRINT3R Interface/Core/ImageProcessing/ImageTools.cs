@@ -19,6 +19,7 @@ namespace Core.ImageProcessing
             public Size ResizeSize;
             public bool NormalizeImage;
             public bool InvertImage;
+            public bool InvertPost;
         }
 
         public static T Clamp<T>(this T val, T min, T max) where T : IComparable<T>
@@ -86,6 +87,22 @@ namespace Core.ImageProcessing
                         brightnessMap[j, i] = 1 - brightnessMap[j, i];
 
             byte[,] quantized = QuantizeBrightnessMap(brightnessMap, newBitmap.Width, newBitmap.Height, p.QuantizeLevel);
+
+            if (p.InvertPost)
+            {
+                // Find min and max
+                byte max = 0;
+                for (int i = 0; i < newBitmap.Height; i++)
+                    for (int j = 0; j < newBitmap.Width; j++)
+                    {
+                        max = max < quantized[j, i] ? quantized[j, i] : max;
+                    }
+
+                // Invert by subtraction
+                for (int i = 0; i < newBitmap.Height; i++)
+                    for (int j = 0; j < newBitmap.Width; j++)
+                        quantized[j, i] = (byte)(max - quantized[j, i]);
+            }
 
             byte[] result = new byte[newBitmap.Width * newBitmap.Height];
             for (int i = 0; i < newBitmap.Height; i++)

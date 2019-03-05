@@ -82,6 +82,7 @@
                     </Grid.ColumnDefinitions>
                     <StackPanel Grid.Column="0" VerticalAlignment="Center">
                         <CheckBox x:Name="InvertCheckBox" Content="Invert Image" HorizontalAlignment="Left" Margin="10" VerticalAlignment="Center" Foreground="White"/>
+                        <CheckBox x:Name="InvertPostCheckBox" Content="Invert Post" HorizontalAlignment="Left" Margin="10,0,10,0" VerticalAlignment="Center" Foreground="White"/>
                         <CheckBox x:Name="NormalizeCheckBox" Content="Normalize" HorizontalAlignment="Left" Margin="10" VerticalAlignment="Center" Foreground="White"/>
                     </StackPanel>
                     <TextBlock Grid.Column="1" Foreground="DimGray" TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Center">
