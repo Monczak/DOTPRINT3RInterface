@@ -10,7 +10,7 @@
     <Grid HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Stretch" Background="#FF232323">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="540"/>
-            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="254"/>
         </Grid.ColumnDefinitions>
 
         <Canvas x:Name="ImageCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White">
@@ -20,12 +20,11 @@
         <Grid x:Name="Menu" Margin="10" Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
-                <RowDefinition/>
-                <RowDefinition/>
+                <RowDefinition Height="40"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <Grid>
+            <Grid Grid.Row="0">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
@@ -44,6 +43,55 @@
                 <Button x:Name="LoadFileBtn" Grid.Column="0" Content="Load File" HorizontalAlignment="Center" Margin="10" VerticalAlignment="Top" Width="75" Click="LoadFileBtn_Click"/>
                 <Button x:Name="SendFileBtn" Grid.Column="1" Content="Send to EV3" HorizontalAlignment="Center" Margin="10" VerticalAlignment="Top" Width="75" Click="SendFileBtn_Click"/>
 
+            </Grid>
+
+            <Grid Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="X Size" Foreground="White" TextAlignment="Left" Margin="10,10,10,0" FontSize="14"></TextBlock>
+                        <TextBox x:Name="XSizeBox" Margin="10,0,10,10" Height="30" TextAlignment="Center" VerticalContentAlignment="Center" FontSize="15"></TextBox>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1">
+                        <TextBlock Text="Y Size" Foreground="White" TextAlignment="Left" Margin="10,10,10,0" FontSize="14"></TextBlock>
+                        <TextBox x:Name="YSizeBox" Margin="10,0,10,10" Height="30" TextAlignment="Center" VerticalContentAlignment="Center" FontSize="15"></TextBox>
+                    </StackPanel>
+
+                </Grid>
+                <StackPanel Grid.Row="1">
+                    <TextBlock Text="Bias" Foreground="White" TextAlignment="Left" Margin="10,10,10,0" FontSize="14"></TextBlock>
+                    <Slider x:Name="BiasSlider" HorizontalAlignment="Stretch" Margin="10,0,10,10" VerticalAlignment="Center" Maximum="2" Minimum="-2"/>
+                </StackPanel>
+                <StackPanel Grid.Row="2">
+                    <TextBlock Text="Quantization" Foreground="White" TextAlignment="Left" Margin="10,10,10,0" FontSize="14"></TextBlock>
+                    <Slider x:Name="QuantizeSlider" HorizontalAlignment="Stretch" Margin="10,0,10,10" VerticalAlignment="Center" Maximum="8" Minimum="1" TickFrequency="1" IsSnapToTickEnabled="True"/>
+                </StackPanel>
+                <Grid Grid.Row="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                        <CheckBox x:Name="InvertCheckBox" Content="Invert Image" HorizontalAlignment="Left" Margin="10" VerticalAlignment="Center" Foreground="White"/>
+                        <CheckBox x:Name="NormalizeCheckBox" Content="Normalize" HorizontalAlignment="Left" Margin="10" VerticalAlignment="Center" Foreground="White"/>
+                    </StackPanel>
+                    <TextBlock Grid.Column="1" Foreground="DimGray" TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Center">
+                        &lt;/&gt; with &lt;3 <LineBreak/>
+                        by Monczak <LineBreak/>
+                        for ZSA PWr's <LineBreak/>
+                        Open Days
+
+                    </TextBlock>
+                </Grid>
             </Grid>
         </Grid>
     </Grid>

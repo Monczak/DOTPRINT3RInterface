@@ -20,7 +20,7 @@ namespace Core
 
         public static ImageTools.ImageConversionParams p;
 
-        public static void LoadImage()
+        public static bool LoadImage()
         {
             OpenFileDialog dialog = new OpenFileDialog()
             {
@@ -34,18 +34,10 @@ namespace Core
                 Debug.WriteLine(string.Format("Loaded {0}", filePath));
 
                 ImageReader.LoadImage(filePath);
-
-                p = new ImageTools.ImageConversionParams
-                {
-                    Bias = 0f,
-                    QuantizeLevel = 4,
-                    NormalizeImage = false,
-                    ResizeSize = new System.Drawing.Size(28, 28),
-                    InvertImage = false
-                };
-
-                ImageReader.ConvertImageToByteStream(p);
+                return true;
             }
+
+            return false;
         }
     }
 }

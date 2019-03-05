@@ -25,25 +25,119 @@ namespace DOT_PRINT3R_Interface
     public partial class MainWindow : Window
     {
         public Rectangle[,] rectangles;
+        public bool redrawOnValueChanged = true;
+        ImageTools.ImageConversionParams p;
+        public bool imagePicked = false;
 
         public MainWindow()
         {
             InitializeComponent();
+
+            p = new ImageTools.ImageConversionParams()
+            {
+                Bias = 0,
+                QuantizeLevel = 4,
+                ResizeSize = new System.Drawing.Size(28, 28),
+                NormalizeImage = false,
+                InvertImage = false
+            };
+            FileLoader.p = p;
+
+            XSizeBox.Text = p.ResizeSize.Width.ToString();
+            YSizeBox.Text = p.ResizeSize.Height.ToString();
+
+            BiasSlider.Value = p.Bias;
+            QuantizeSlider.Value = p.QuantizeLevel;
+
+            BiasSlider.ValueChanged += BiasSlider_ValueChanged;
+            XSizeBox.TextChanged += XSizeBox_TextChanged;
+            YSizeBox.TextChanged += YSizeBox_TextChanged;
+            QuantizeSlider.ValueChanged += QuantizeSlider_ValueChanged;
+            InvertCheckBox.Checked += InvertCheckBox_Checked;
+            NormalizeCheckBox.Checked += NormalizeCheckBox_Checked;
+            InvertCheckBox.Unchecked += InvertCheckBox_Checked;
+            NormalizeCheckBox.Unchecked += NormalizeCheckBox_Checked;
+        }
+
+        private void NormalizeCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            UpdateConversionParams();
+            ConvertImage(p);
+        }
+
+        private void InvertCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            UpdateConversionParams();
+            ConvertImage(p);
+        }
+
+        private void QuantizeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            UpdateConversionParams();
+            ConvertImage(p);
+        }
+
+        private void YSizeBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            UpdateConversionParams();
+            ConvertImage(p);
+        }
+
+        private void XSizeBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            UpdateConversionParams();
+            ConvertImage(p);
+        }
+
+        private void BiasSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            UpdateConversionParams();
+            ConvertImage(p);
         }
 
         private void LoadFileBtn_Click(object sender, RoutedEventArgs e)
         {
-            FileLoader.LoadImage();
-
-            // Draw image preview
-            DrawPreview();
-
+            if (FileLoader.LoadImage() == true)
+            {
+                imagePicked = true;
+                ConvertImage(p);
+            }
         }
 
         private void SendFileBtn_Click(object sender, RoutedEventArgs e)
         {
             FileConverter.ConvertFile("dummy");
             FileSender.ConnectAndSend();
+        }
+
+        void UpdateConversionParams()
+        {
+            int sizeX = p.ResizeSize.Width, sizeY = p.ResizeSize.Height;
+            System.Drawing.Size oldSize = p.ResizeSize;
+            bool canChangeSize = int.TryParse(XSizeBox.Text, out sizeX) && int.TryParse(YSizeBox.Text, out sizeY) && imagePicked && XSizeBox.Text != "" && YSizeBox.Text != "" && sizeX > 0 && sizeY > 0;
+
+            p = new ImageTools.ImageConversionParams()
+            {
+                Bias = (float)BiasSlider.Value,
+                QuantizeLevel = (int)QuantizeSlider.Value,
+                ResizeSize = canChangeSize ? new System.Drawing.Size(sizeX, sizeY) : oldSize,
+                NormalizeImage = NormalizeCheckBox.IsChecked == true,
+                InvertImage = InvertCheckBox.IsChecked == true
+            };
+
+            FileLoader.p = p;
+        }
+
+        void ConvertImage(ImageTools.ImageConversionParams p)
+        {
+            if (imagePicked)
+            {
+                ImageReader.ConvertImageToByteStream(p);
+
+                // Draw image preview
+                DrawPreview();
+
+            }
         }
 
         void DrawPreview()
