@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.421
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DOT PRINT3R Interface", "DOT PRINT3R Interface\DOT PRINT3R Interface.csproj", "{5AEE5CF6-3E93-42D6-9D53-7A5D3EC5DE80}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EV3Comm", "EV3Comm\EV3Comm.csproj", "{6C12F1AD-E817-4B64-91BF-628B298C1FB0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{5AEE5CF6-3E93-42D6-9D53-7A5D3EC5DE80}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5AEE5CF6-3E93-42D6-9D53-7A5D3EC5DE80}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5AEE5CF6-3E93-42D6-9D53-7A5D3EC5DE80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C12F1AD-E817-4B64-91BF-628B298C1FB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C12F1AD-E817-4B64-91BF-628B298C1FB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C12F1AD-E817-4B64-91BF-628B298C1FB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C12F1AD-E817-4B64-91BF-628B298C1FB0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -28,6 +28,7 @@ namespace DOT_PRINT3R_Interface
         public bool redrawOnValueChanged = true;
         ImageTools.ImageConversionParams p;
         public bool imagePicked = false;
+        Process companion;
 
         public MainWindow()
         {
@@ -80,12 +81,39 @@ namespace DOT_PRINT3R_Interface
             {
                 UIMessage.ShowError("The file you selected does not appear to be an image. Try another file.");
             }
+            else if (result == FileLoader.ImageLoadResult.UnsupportedImage)
+            {
+                UIMessage.ShowError("SVGs are not supported. Use raster images only.");
+            }
         }
 
         private void SendFileBtn_Click(object sender, RoutedEventArgs e)
         {
-            FileConverter.ConvertFile("dummy");
-            FileSender.ConnectAndSend();
+            SendFileBtn.IsEnabled = false;
+            FileConverter.ConvertFile(System.IO.Path.ChangeExtension(FileLoader.filePath, ".rtf"));
+            //FileSender.ConnectAndSend();
+
+            companion = new Process();
+            companion.StartInfo.UseShellExecute = true;
+            companion.StartInfo.Arguments = FileConverter.outputPath;
+            companion.StartInfo.FileName = "EV3Comm.exe";
+            companion.StartInfo.CreateNoWindow = true;
+            companion.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            //companion.EnableRaisingEvents = true;
+
+            //companion.Exited += Companion_Exited;
+
+            companion.Start();
+            SendFileBtn.IsEnabled = true;
+        }
+
+        private void Companion_Exited(object sender, EventArgs e)
+        {
+            SendFileBtn.IsEnabled = true;
+            if (companion.ExitCode == -1)
+            {
+                Debug.WriteLine("Something went wrong");
+            }
         }
 
         void UpdateConversionParams()

@@ -4,31 +4,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using System.Diagnostics;
 
 using Lego.Ev3.Core;
 using Lego.Ev3.Desktop;
 
-namespace Core
+namespace EV3Comm
 {
-    static class EV3
+    static class Communication
     {
-        public static Brick brick;
+        static Brick brick;
 
         public static bool Connected = false;
 
         public static async void ConnectToBrick()
         {
-            brick = new Brick(new UsbCommunication());
+            Console.WriteLine("I: Working Directory: {0}", Directory.GetCurrentDirectory());
+
+            brick = new Brick(new UsbCommunication(), true);
             Connected = true;
             try
             {
-                await brick.ConnectAsync(TimeSpan.FromMilliseconds(1));
-                Debug.WriteLine("I: Connected");
+                await brick.ConnectAsync();
+                Console.WriteLine("I: Connected");
             }
             catch (Exception e)
             {
-                Debug.WriteLine(string.Format("E: Cannot connect to EV3: {0}", e.Message));
+                Console.WriteLine(string.Format("E: Cannot connect to EV3: {0}", e.Message));
                 Connected = false;
             }
         }
@@ -42,20 +43,20 @@ namespace Core
         {
             brick.Disconnect();
             Connected = false;
-            Debug.WriteLine("I: Disconnected");
+            Console.WriteLine("I: Disconnected");
         }
 
         public static async Task SendFile(string path)
         {
             byte[] data = File.ReadAllBytes(path);
 
-            // Replace line endings (just in case, when using files made with the obsolete command-line tool)
+            // Replace line endings
             for (int i = 0; i < data.Length; i++)
                 if (data[i] == 10) data[i] = 13;
 
             await brick.SystemCommand.WriteFileAsync(data, "../prjs/DOT_PRINT3R/image.rtf");
 
-            //Debug.WriteLine("I: File sent successfully");
+            Console.WriteLine("I: File sent successfully");
         }
     }
 }

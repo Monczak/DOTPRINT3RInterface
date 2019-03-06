@@ -24,7 +24,8 @@ namespace Core
         {
             Success,
             NotPicked,
-            Invalid
+            Invalid,
+            UnsupportedImage
         }
 
         public static ImageLoadResult LoadImage()
@@ -46,6 +47,8 @@ namespace Core
                 }
                 catch (OutOfMemoryException)
                 {
+                    if (Path.GetExtension(filePath) == ".svg")
+                        return ImageLoadResult.UnsupportedImage;
                     return ImageLoadResult.Invalid;
                 }
                 return ImageLoadResult.Success;
