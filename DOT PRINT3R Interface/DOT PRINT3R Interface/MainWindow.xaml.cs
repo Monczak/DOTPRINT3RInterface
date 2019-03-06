@@ -50,55 +50,19 @@ namespace DOT_PRINT3R_Interface
             BiasSlider.Value = p.Bias;
             QuantizeSlider.Value = p.QuantizeLevel;
 
-            BiasSlider.ValueChanged += BiasSlider_ValueChanged;
-            XSizeBox.TextChanged += XSizeBox_TextChanged;
-            YSizeBox.TextChanged += YSizeBox_TextChanged;
-            QuantizeSlider.ValueChanged += QuantizeSlider_ValueChanged;
-            InvertCheckBox.Checked += InvertCheckBox_Checked;
-            NormalizeCheckBox.Checked += NormalizeCheckBox_Checked;
-            InvertPostCheckBox.Checked += InvertPostCheckBox_Checked;
-            InvertCheckBox.Unchecked += InvertCheckBox_Checked;
-            NormalizeCheckBox.Unchecked += NormalizeCheckBox_Checked;
-            InvertPostCheckBox.Unchecked += InvertPostCheckBox_Checked;
+            BiasSlider.ValueChanged += UpdateImageEvent;
+            XSizeBox.TextChanged += UpdateImageEvent;
+            YSizeBox.TextChanged += UpdateImageEvent;
+            QuantizeSlider.ValueChanged += UpdateImageEvent;
+            InvertCheckBox.Checked += UpdateImageEvent;
+            NormalizeCheckBox.Checked += UpdateImageEvent;
+            InvertPostCheckBox.Checked += UpdateImageEvent;
+            InvertCheckBox.Unchecked += UpdateImageEvent;
+            NormalizeCheckBox.Unchecked += UpdateImageEvent;
+            InvertPostCheckBox.Unchecked += UpdateImageEvent;
         }
 
-        private void InvertPostCheckBox_Checked(object sender, RoutedEventArgs e)
-        {
-            UpdateConversionParams();
-            ConvertImage(p);
-        }
-
-        private void NormalizeCheckBox_Checked(object sender, RoutedEventArgs e)
-        {
-            UpdateConversionParams();
-            ConvertImage(p);
-        }
-
-        private void InvertCheckBox_Checked(object sender, RoutedEventArgs e)
-        {
-            UpdateConversionParams();
-            ConvertImage(p);
-        }
-
-        private void QuantizeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            UpdateConversionParams();
-            ConvertImage(p);
-        }
-
-        private void YSizeBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            UpdateConversionParams();
-            ConvertImage(p);
-        }
-
-        private void XSizeBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            UpdateConversionParams();
-            ConvertImage(p);
-        }
-
-        private void BiasSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void UpdateImageEvent<T>(object sender, T e)
         {
             UpdateConversionParams();
             ConvertImage(p);
