@@ -57,6 +57,7 @@ namespace EV3Comm
             await brick.SystemCommand.WriteFileAsync(data, "../prjs/DOT_PRINT3R/image.rtf");
 
             Console.WriteLine("I: File sent successfully");
+            File.Delete(path);
         }
     }
 }
