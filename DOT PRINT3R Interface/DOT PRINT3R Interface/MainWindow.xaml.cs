@@ -70,10 +70,15 @@ namespace DOT_PRINT3R_Interface
 
         private void LoadFileBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (FileLoader.LoadImage() == true)
+            FileLoader.ImageLoadResult result;
+            if ((result = FileLoader.LoadImage()) == FileLoader.ImageLoadResult.Success)
             {
                 imagePicked = true;
                 ConvertImage(p);
+            }
+            else if (result == FileLoader.ImageLoadResult.Invalid)
+            {
+                UIMessage.ShowError("The file you selected does not appear to be an image. Try another file.");
             }
         }
 

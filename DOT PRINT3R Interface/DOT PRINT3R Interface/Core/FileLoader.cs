@@ -20,11 +20,18 @@ namespace Core
 
         public static ImageTools.ImageConversionParams p;
 
-        public static bool LoadImage()
+        public enum ImageLoadResult
+        {
+            Success,
+            NotPicked,
+            Invalid
+        }
+
+        public static ImageLoadResult LoadImage()
         {
             OpenFileDialog dialog = new OpenFileDialog()
             {
-                Filter = "Image Files|*.png|*.jpg|*.jpeg"
+                Filter = "Image Files|*.png;*.jpg;*.jpeg;*.gif|All Files|*.*"
             };
 
             bool? result = dialog.ShowDialog();
@@ -33,11 +40,18 @@ namespace Core
                 filePath = dialog.FileName;
                 Debug.WriteLine(string.Format("Loaded {0}", filePath));
 
-                ImageReader.LoadImage(filePath);
-                return true;
+                try
+                {
+                    ImageReader.LoadImage(filePath);
+                }
+                catch (OutOfMemoryException)
+                {
+                    return ImageLoadResult.Invalid;
+                }
+                return ImageLoadResult.Success;
             }
 
-            return false;
+            return ImageLoadResult.NotPicked;
         }
     }
 }
