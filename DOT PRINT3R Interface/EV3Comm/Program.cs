@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace EV3Comm
 {
@@ -23,6 +24,7 @@ namespace EV3Comm
                 }
                 catch (Exception e) {
                     Console.WriteLine("E: Something went wrong: " + e.Message);
+                    //Thread.Sleep(1000);
                     return -1;
                 }
 

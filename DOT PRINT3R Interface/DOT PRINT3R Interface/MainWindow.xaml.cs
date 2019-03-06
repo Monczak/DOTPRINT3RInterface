@@ -89,22 +89,36 @@ namespace DOT_PRINT3R_Interface
 
         private void SendFileBtn_Click(object sender, RoutedEventArgs e)
         {
-            SendFileBtn.IsEnabled = false;
-            FileConverter.ConvertFile(System.IO.Path.ChangeExtension(FileLoader.filePath, ".rtf"));
-            //FileSender.ConnectAndSend();
+            EV3.ConnectToBrick();
+            if (EV3.Connected)
+            {
+                EV3.Disconnect();
+                if (imagePicked)
+                {
+                    SendFileBtn.IsEnabled = false;
+                    FileConverter.ConvertFile(System.IO.Path.ChangeExtension(FileLoader.filePath, ".rtf"));
+                    //FileSender.ConnectAndSend();
 
-            companion = new Process();
-            companion.StartInfo.UseShellExecute = true;
-            companion.StartInfo.Arguments = FileConverter.outputPath;
-            companion.StartInfo.FileName = "EV3Comm.exe";
-            companion.StartInfo.CreateNoWindow = true;
-            companion.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            //companion.EnableRaisingEvents = true;
+                    companion = new Process();
+                    companion.StartInfo.UseShellExecute = true;
+                    companion.StartInfo.Arguments = FileConverter.outputPath;
+                    companion.StartInfo.FileName = "EV3Comm.exe";
+                    companion.StartInfo.CreateNoWindow = true;
+                    companion.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                    //companion.EnableRaisingEvents = true;
 
-            //companion.Exited += Companion_Exited;
+                    //companion.Exited += Companion_Exited;
 
-            companion.Start();
-            SendFileBtn.IsEnabled = true;
+                    companion.Start();
+                    SendFileBtn.IsEnabled = true;
+                }
+            }
+            else
+            {
+                UIMessage.ShowError("Cannot connect to EV3. Make sure it's plugged in via USB and turned on.");
+            }
+            EV3.Disconnect();
+
         }
 
         private void Companion_Exited(object sender, EventArgs e)

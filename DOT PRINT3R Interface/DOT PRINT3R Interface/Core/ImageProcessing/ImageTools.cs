@@ -140,7 +140,7 @@ namespace Core.ImageProcessing
             byte[,] result = new byte[width, height];
             for (int i = 0; i < height; i++)
                 for (int j = 0; j < width; j++)
-                    result[j, i] = (byte)Math.Floor(brightnessMap[j, i] * quantizeLevel);
+                    result[j, i] = (byte)Math.Floor(brightnessMap[j, i] * quantizeLevel).Clamp(0, quantizeLevel + 1);
 
             return result;
         }
