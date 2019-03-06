@@ -109,7 +109,15 @@ namespace DOT_PRINT3R_Interface
 
                     //companion.Exited += Companion_Exited;
 
-                    companion.Start();
+                    try
+                    {
+                        companion.Start();
+                    }
+                    catch (Exception)
+                    {
+                        UIMessage.ShowError("Companion app not found. Is there EV3Comm.exe in the same directory as this executable?");
+                        companion.Dispose();
+                    }
                     SendFileBtn.IsEnabled = true;
                 }
             }
