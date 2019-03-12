@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using System.IO;
+
 
 namespace EV3Comm
 {
@@ -19,6 +21,13 @@ namespace EV3Comm
                 {
                     if (args == null || args.Length == 0) return -1;
                     string path = args[0];
+
+                    if (Path.GetExtension(path) != ".rtf")
+                    {
+                        Console.WriteLine("E: File is invalid");
+                        return -1;
+                    }
+
                     Communication.SendFile(path).Wait();
                     Communication.TestConnection();
                 }

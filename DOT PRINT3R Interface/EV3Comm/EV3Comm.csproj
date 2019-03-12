@@ -33,8 +33,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Lego.Ev3.Desktop">
-      <HintPath>..\..\..\..\..\Szymon\Downloads\Lego.Ev3.1.0.0\Lego.Ev3.Desktop.dll</HintPath>
+    <Reference Include="Lego.Ev3.Desktop, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lego.Ev3.1.0.0\lib\net45\Lego.Ev3.Desktop.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -52,6 +52,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="docs\LEGO Mindstorms EV3 - Desktop.chm" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
