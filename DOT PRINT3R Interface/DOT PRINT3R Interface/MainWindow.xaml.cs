@@ -47,6 +47,8 @@ namespace DOT_PRINT3R_Interface
             };
             FileLoader.p = p;
 
+            SendFileBtn.IsEnabled = false;
+
             XSizeBox.Text = p.ResizeSize.Width.ToString();
             YSizeBox.Text = p.ResizeSize.Height.ToString();
 
@@ -121,6 +123,7 @@ namespace DOT_PRINT3R_Interface
             {
                 imagePicked = true;
                 ConvertImage(p);
+                SendFileBtn.IsEnabled = true;
             }
             else if (result == FileLoader.ImageLoadResult.Invalid)
             {
@@ -134,44 +137,46 @@ namespace DOT_PRINT3R_Interface
 
         private void SendFileBtn_Click(object sender, RoutedEventArgs e)
         {
-            EV3.ConnectToBrick();
-            if (EV3.Connected)
+            if (imagePicked)
             {
-                EV3.Disconnect();
-                if (imagePicked)
+                EV3.ConnectToBrick();
+                if (EV3.Connected)
                 {
-                    SendFileBtn.IsEnabled = false;
-                    FileConverter.ConvertFile(System.IO.Path.ChangeExtension(FileLoader.filePath, ".rtf"));
-                    //FileSender.ConnectAndSend();
-
-                    companion = new Process();
-                    companion.StartInfo.UseShellExecute = true;
-                    companion.StartInfo.Arguments = FileConverter.outputPath;
-                    companion.StartInfo.FileName = "EV3Comm.exe";
-                    companion.StartInfo.CreateNoWindow = true;
-                    companion.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                    //companion.EnableRaisingEvents = true;
-
-                    //companion.Exited += Companion_Exited;
-
-                    try
+                    EV3.Disconnect();
+                    if (imagePicked)
                     {
-                        companion.Start();
+                        SendFileBtn.IsEnabled = false;
+                        FileConverter.ConvertFile(System.IO.Path.ChangeExtension(FileLoader.filePath, ".rtf"));
+                        //FileSender.ConnectAndSend();
+
+                        companion = new Process();
+                        companion.StartInfo.UseShellExecute = true;
+                        companion.StartInfo.Arguments = FileConverter.outputPath;
+                        companion.StartInfo.FileName = "EV3Comm.exe";
+                        companion.StartInfo.CreateNoWindow = true;
+                        companion.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                        //companion.EnableRaisingEvents = true;
+
+                        //companion.Exited += Companion_Exited;
+
+                        try
+                        {
+                            companion.Start();
+                        }
+                        catch (Exception)
+                        {
+                            UIMessage.ShowError("Companion app not found. Is there EV3Comm.exe in the same directory as this executable?");
+                            companion.Dispose();
+                        }
+                        SendFileBtn.IsEnabled = true;
                     }
-                    catch (Exception)
-                    {
-                        UIMessage.ShowError("Companion app not found. Is there EV3Comm.exe in the same directory as this executable?");
-                        companion.Dispose();
-                    }
-                    SendFileBtn.IsEnabled = true;
                 }
+                else
+                {
+                    UIMessage.ShowError("Cannot connect to EV3. Make sure it's plugged in via USB and turned on.");
+                }
+                EV3.Disconnect();
             }
-            else
-            {
-                UIMessage.ShowError("Cannot connect to EV3. Make sure it's plugged in via USB and turned on.");
-            }
-            EV3.Disconnect();
-
         }
 
         private void Companion_Exited(object sender, EventArgs e)
