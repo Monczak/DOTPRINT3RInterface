@@ -30,6 +30,8 @@ namespace DOT_PRINT3R_Interface
         public bool imagePicked = false;
         Process companion;
 
+        Point cursorCanvasPoint;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -61,6 +63,49 @@ namespace DOT_PRINT3R_Interface
             InvertCheckBox.Unchecked += UpdateImageEvent;
             NormalizeCheckBox.Unchecked += UpdateImageEvent;
             InvertPostCheckBox.Unchecked += UpdateImageEvent;
+
+            ImageCanvas.MouseMove += ImageCanvas_MouseMove;
+            ImageCanvas.MouseLeftButtonDown += ImageCanvas_MouseLeftButtonDown;
+            ImageCanvas.MouseRightButtonDown += ImageCanvas_MouseRightButtonDown;
+        }
+
+        private void ImageCanvas_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (imagePicked) DrawOnImage(0);
+        }
+
+        private void ImageCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (imagePicked) DrawOnImage((byte)p.QuantizeLevel);
+        }
+
+        Point GetCursorPos()
+        {
+            cursorCanvasPoint = Mouse.GetPosition(ImageCanvas);
+
+            Point imagePos = new Point(Math.Floor(cursorCanvasPoint.X * (p.ResizeSize.Width / ImageCanvas.ActualWidth)), Math.Floor(cursorCanvasPoint.Y * (p.ResizeSize.Width / ImageCanvas.ActualHeight)));
+            return imagePos;
+        }
+
+        void UpdateStream(Point point, byte value)
+        {
+            ImageReader.stream[(int)point.X + (int)point.Y * p.ResizeSize.Width] = value;
+        }
+
+        void DrawOnImage(byte value)
+        {
+            Point imagePos = GetCursorPos();
+            UpdateStream(imagePos, value);
+            DrawPreview();
+        }
+
+        private void ImageCanvas_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (imagePicked)
+                if (e.LeftButton == MouseButtonState.Pressed)
+                    DrawOnImage((byte)p.QuantizeLevel);
+                else if (e.RightButton == MouseButtonState.Pressed)
+                    DrawOnImage(0);
         }
 
         private void UpdateImageEvent<T>(object sender, T e)
